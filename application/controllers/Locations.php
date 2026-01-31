@@ -22,6 +22,36 @@ class Locations extends MY_Controller {
         $this->load->view('locations/list', $data);
     }
 
+    public function view($id) {
+        $location = $this->db->get_where('locations', ['id' => $id])->row();
+        
+        if (!$location) show_404();
+        
+        // Authorization check
+        if ($this->session->userdata('role') === 'staff' && $location->internal_assignee_id != $this->session->userdata('user_id')) {
+            show_error('Unauthorized access to this location', 403);
+        }
+
+        // Decode JSON data
+        $location->data = json_decode($location->data_json, true);
+        
+        // Get counts for various items
+        $data['reviews_count'] = $this->db->where('location_id', $id)->count_all_results('reviews');
+        $data['posts_count'] = $this->db->where('location_id', $id)->count_all_results('posts');
+        $data['products_count'] = $this->db->where('location_id', $id)->where('deleted_at', NULL)->count_all_results('products');
+        $data['services_count'] = $this->db->where('location_id', $id)->where('deleted_at', NULL)->count_all_results('services');
+        
+        // Get recent insights summary
+        $this->db->select('SUM(calls) as total_calls, SUM(website_clicks) as total_clicks, SUM(direction_requests) as total_directions');
+        $this->db->where('location_id', $id);
+        $this->db->where('date >=', date('Y-m-d', strtotime('-30 days')));
+        $insights = $this->db->get('insights')->row();
+        $data['insights_summary'] = $insights;
+        
+        $data['location'] = $location;
+        $this->load->view('locations/view', $data);
+    }
+
     public function edit($id) {
         $location = $this->db->get_where('locations', ['id' => $id])->row();
         

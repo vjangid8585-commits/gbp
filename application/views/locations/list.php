@@ -64,7 +64,9 @@
                         <?php foreach($locations as $loc): ?>
                         <tr>
                             <td>
-                                <strong><?php echo $loc->business_name; ?></strong>
+                                <a href="<?php echo base_url('locations/view/'.$loc->id); ?>" style="text-decoration: none;">
+                                    <strong style="color: var(--text-primary);"><?php echo $loc->business_name; ?></strong>
+                                </a>
                                 <br><small style="color: var(--text-secondary);"><?php echo $loc->google_location_id; ?></small>
                             </td>
                             <td>
@@ -74,18 +76,27 @@
                             </td>
                             <td><?php echo $loc->assignee_name ?? '<span style="color:var(--text-secondary)">Unassigned</span>'; ?></td>
                             <td class="text-end">
-                                <div class="d-flex gap-2 justify-content-end">
-                                    <a href="<?php echo base_url('locations/edit/'.$loc->id); ?>" class="btn btn-glass btn-sm">
-                                        <i class="bi bi-pencil"></i> Edit
+                                <div class="d-flex gap-2 justify-content-end flex-wrap">
+                                    <a href="<?php echo base_url('locations/view/'.$loc->id); ?>" class="btn btn-primary-glow btn-sm" title="View Details">
+                                        <i class="bi bi-eye"></i>
                                     </a>
-                                    <a href="<?php echo base_url('insights/view/'.$loc->id); ?>" class="btn btn-glass btn-sm">
-                                        <i class="bi bi-graph-up"></i> Insights
+                                    <a href="<?php echo base_url('locations/edit/'.$loc->id); ?>" class="btn btn-glass btn-sm" title="Edit Details">
+                                        <i class="bi bi-pencil"></i>
                                     </a>
-                                    <a href="<?php echo base_url('reviews/index/'.$loc->id); ?>" class="btn btn-glass btn-sm">
-                                        <i class="bi bi-star"></i> Reviews
+                                    <a href="<?php echo base_url('insights/view/'.$loc->id); ?>" class="btn btn-glass btn-sm" title="Insights">
+                                        <i class="bi bi-graph-up"></i>
                                     </a>
-                                    <a href="<?php echo base_url('posts/index/'.$loc->id); ?>" class="btn btn-glass btn-sm">
-                                        <i class="bi bi-postcard"></i> Posts
+                                    <a href="<?php echo base_url('reviews/index/'.$loc->id); ?>" class="btn btn-glass btn-sm" title="Reviews">
+                                        <i class="bi bi-star"></i>
+                                    </a>
+                                    <a href="<?php echo base_url('posts/index/'.$loc->id); ?>" class="btn btn-glass btn-sm" title="Posts">
+                                        <i class="bi bi-postcard"></i>
+                                    </a>
+                                    <a href="<?php echo base_url('products/index/'.$loc->id); ?>" class="btn btn-glass btn-sm" title="Products">
+                                        <i class="bi bi-bag"></i>
+                                    </a>
+                                    <a href="<?php echo base_url('services/index/'.$loc->id); ?>" class="btn btn-glass btn-sm" title="Services">
+                                        <i class="bi bi-wrench"></i>
                                     </a>
                                 </div>
                             </td>

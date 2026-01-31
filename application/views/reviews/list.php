@@ -40,47 +40,104 @@
             </div>
         <?php endif; ?>
 
+        <?php if($this->session->flashdata('error')): ?>
+            <div class="alert-glass error mb-4">
+                <i class="bi bi-exclamation-circle me-2"></i>
+                <?php echo $this->session->flashdata('error'); ?>
+            </div>
+        <?php endif; ?>
+
+        <!-- Stats Row -->
+        <div class="row g-4 mb-5">
+            <div class="col-md-4">
+                <div class="stat-card">
+                    <div class="stat-icon primary"><i class="bi bi-star-fill"></i></div>
+                    <h2><?php echo number_format($avg_rating, 1); ?></h2>
+                    <p>Average Rating</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stat-card success">
+                    <div class="stat-icon success"><i class="bi bi-chat-dots"></i></div>
+                    <h2><?php echo count($reviews); ?></h2>
+                    <p>Total Reviews</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stat-card warning">
+                    <div class="stat-icon warning"><i class="bi bi-reply"></i></div>
+                    <h2><?php echo $pending_replies; ?></h2>
+                    <p>Pending Replies</p>
+                </div>
+            </div>
+        </div>
+
         <?php if(empty($reviews)): ?>
             <div class="glass-card text-center py-5">
-                <i class="bi bi-chat-square" style="font-size: 4rem; color: var(--text-secondary);"></i>
+                <i class="bi bi-star" style="font-size: 4rem; color: var(--text-secondary);"></i>
                 <h4 class="mt-3">No Reviews Yet</h4>
                 <p class="text-secondary">Click "Sync Reviews" to fetch reviews from Google.</p>
             </div>
         <?php else: ?>
-            <?php foreach($reviews as $review): ?>
-            <div class="review-card">
-                <div class="d-flex justify-content-between align-items-start mb-3">
-                    <div>
-                        <h5 class="mb-1"><?php echo $review->reviewer_name; ?></h5>
-                        <div class="review-stars">
-                            <?php for($i = 1; $i <= 5; $i++): ?>
-                                <i class="bi bi-star<?php echo $i <= $review->rating ? '-fill' : ''; ?>"></i>
-                            <?php endfor; ?>
+            <div class="row g-4">
+                <?php foreach($reviews as $review): ?>
+                    <div class="col-12">
+                        <div class="glass-card">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="avatar" style="width:50px;height:50px;background:var(--gradient-primary);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:1.2rem;">
+                                        <?php echo strtoupper(substr($review->reviewer_name, 0, 1)); ?>
+                                    </div>
+                                    <div>
+                                        <h5 class="mb-0"><?php echo htmlspecialchars($review->reviewer_name); ?></h5>
+                                        <small style="color: var(--text-secondary);">
+                                            <?php echo date('M d, Y', strtotime($review->created_at)); ?>
+                                        </small>
+                                    </div>
+                                </div>
+                                <div class="rating">
+                                    <?php for($i = 1; $i <= 5; $i++): ?>
+                                        <i class="bi bi-star<?php echo $i <= $review->rating ? '-fill' : ''; ?>" 
+                                           style="color: <?php echo $i <= $review->rating ? '#fbbf24' : 'var(--text-secondary)'; ?>"></i>
+                                    <?php endfor; ?>
+                                </div>
+                            </div>
+                            
+                            <?php if($review->comment): ?>
+                                <p class="mb-3" style="color: var(--text-primary);">
+                                    "<?php echo htmlspecialchars($review->comment); ?>"
+                                </p>
+                            <?php endif; ?>
+
+                            <?php if($review->reply_text): ?>
+                                <div class="reply-box p-3 rounded mb-3" style="background: rgba(99, 102, 241, 0.1); border-left: 3px solid var(--primary);">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <small style="color: var(--primary);"><i class="bi bi-reply-fill me-1"></i>Your Reply</small>
+                                        <a href="<?php echo base_url('reviews/delete_reply/'.$review->id); ?>" 
+                                           class="btn btn-sm btn-glass" onclick="return confirm('Delete this reply?')">
+                                            <i class="bi bi-trash"></i>
+                                        </a>
+                                    </div>
+                                    <p class="mb-0" style="color: var(--text-primary);">
+                                        <?php echo htmlspecialchars($review->reply_text); ?>
+                                    </p>
+                                </div>
+                            <?php else: ?>
+                                <!-- Reply Form -->
+                                <form action="<?php echo base_url('reviews/reply/'.$review->id); ?>" method="POST" class="mt-3">
+                                    <div class="input-group">
+                                        <input type="text" name="reply" class="form-control form-control-glass" 
+                                               placeholder="Write a reply..." required>
+                                        <button type="submit" class="btn btn-primary-glow">
+                                            <i class="bi bi-send"></i> Reply
+                                        </button>
+                                    </div>
+                                </form>
+                            <?php endif; ?>
                         </div>
                     </div>
-                    <span class="badge-glass"><?php echo date('M d, Y', strtotime($review->created_at)); ?></span>
-                </div>
-                
-                <p style="color: var(--text-primary); line-height: 1.7;"><?php echo $review->comment; ?></p>
-                
-                <?php if($review->reply_text): ?>
-                    <div class="mt-3 p-3" style="background: rgba(16, 185, 129, 0.1); border-radius: 12px; border-left: 3px solid var(--success);">
-                        <small style="color: var(--success);"><i class="bi bi-reply me-1"></i> Your Reply:</small>
-                        <p class="mb-0 mt-1"><?php echo $review->reply_text; ?></p>
-                    </div>
-                <?php else: ?>
-                    <form action="<?php echo base_url('reviews/reply/'.$review->id); ?>" method="POST" class="mt-3">
-                        <div class="d-flex gap-2">
-                            <input type="text" name="reply" class="form-control form-control-glass" 
-                                   placeholder="Write your reply..." required>
-                            <button type="submit" class="btn btn-success-glow">
-                                <i class="bi bi-send"></i>
-                            </button>
-                        </div>
-                    </form>
-                <?php endif; ?>
+                <?php endforeach; ?>
             </div>
-            <?php endforeach; ?>
         <?php endif; ?>
     </div>
 </body>
