@@ -173,6 +173,8 @@ class Sync extends MY_Controller {
         
         redirect('reviews/index/' . $location_id);
     }
+
+    private function _upsert_locations($locations, $account_id) {
         foreach ($locations as $loc) {
             // Google uses 'name' as ID like "accounts/x/locations/y"
             $google_id = $loc['name'];

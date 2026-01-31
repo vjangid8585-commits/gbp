@@ -1,0 +1,372 @@
+/* GBP Agency Dashboard - Modern Glassmorphism Design */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --primary: #6366f1;
+    --primary-dark: #4f46e5;
+    --secondary: #ec4899;
+    --accent: #06b6d4;
+    --success: #10b981;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+    --dark: #0f172a;
+    --glass-bg: rgba(255, 255, 255, 0.1);
+    --glass-border: rgba(255, 255, 255, 0.2);
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #312e81 100%);
+    min-height: 100vh;
+    color: var(--text-primary);
+}
+
+/* Animated Background */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at 20% 80%, rgba(99, 102, 241, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(236, 72, 153, 0.2) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(6, 182, 212, 0.15) 0%, transparent 40%);
+    z-index: -1;
+    animation: bgFloat 20s ease-in-out infinite;
+}
+
+@keyframes bgFloat {
+    0%, 100% { transform: scale(1) rotate(0deg); }
+    50% { transform: scale(1.1) rotate(5deg); }
+}
+
+/* Glass Card */
+.glass-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 24px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+.glass-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(99, 102, 241, 0.2);
+    border-color: rgba(99, 102, 241, 0.4);
+}
+
+/* Navbar */
+.navbar-glass {
+    background: rgba(15, 23, 42, 0.8);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--glass-border);
+    padding: 16px 0;
+}
+
+.navbar-glass .navbar-brand {
+    font-weight: 700;
+    font-size: 1.5rem;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.navbar-glass .nav-link {
+    color: var(--text-secondary) !important;
+    font-weight: 500;
+    padding: 8px 16px !important;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.navbar-glass .nav-link:hover {
+    color: var(--text-primary) !important;
+    background: var(--glass-bg);
+}
+
+/* Buttons */
+.btn-glass {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    color: var(--text-primary);
+    padding: 12px 24px;
+    border-radius: 12px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.btn-glass:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+    color: white;
+}
+
+.btn-primary-glow {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    border: none;
+    color: white;
+    padding: 12px 28px;
+    border-radius: 12px;
+    font-weight: 600;
+    box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
+    transition: all 0.3s ease;
+}
+
+.btn-primary-glow:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(99, 102, 241, 0.6);
+    color: white;
+}
+
+.btn-success-glow {
+    background: linear-gradient(135deg, var(--success), #059669);
+    border: none;
+    color: white;
+    padding: 12px 28px;
+    border-radius: 12px;
+    font-weight: 600;
+    box-shadow: 0 4px 20px rgba(16, 185, 129, 0.4);
+}
+
+.btn-warning-glow {
+    background: linear-gradient(135deg, var(--warning), #d97706);
+    border: none;
+    color: white;
+    padding: 12px 28px;
+    border-radius: 12px;
+    font-weight: 600;
+    box-shadow: 0 4px 20px rgba(245, 158, 11, 0.4);
+}
+
+/* Stats Cards */
+.stat-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 28px;
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+}
+
+.stat-card.success::before {
+    background: linear-gradient(90deg, var(--success), var(--accent));
+}
+
+.stat-card.warning::before {
+    background: linear-gradient(90deg, var(--warning), var(--secondary));
+}
+
+.stat-card .stat-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    margin-bottom: 16px;
+}
+
+.stat-card .stat-icon.primary { background: rgba(99, 102, 241, 0.2); color: var(--primary); }
+.stat-card .stat-icon.success { background: rgba(16, 185, 129, 0.2); color: var(--success); }
+.stat-card .stat-icon.warning { background: rgba(245, 158, 11, 0.2); color: var(--warning); }
+
+.stat-card h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.stat-card p {
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+/* Forms */
+.form-control-glass {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    padding: 14px 18px;
+    color: var(--text-primary);
+    transition: all 0.3s ease;
+}
+
+.form-control-glass:focus {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2);
+    outline: none;
+    color: white;
+}
+
+.form-control-glass::placeholder {
+    color: var(--text-secondary);
+}
+
+/* Tables */
+.table-glass {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 12px;
+}
+
+.table-glass thead th {
+    background: transparent;
+    color: var(--text-secondary);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+    padding: 16px;
+    border: none;
+}
+
+.table-glass tbody tr {
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.table-glass tbody tr:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: scale(1.01);
+}
+
+.table-glass tbody td {
+    padding: 20px 16px;
+    border: none;
+    color: var(--text-primary);
+}
+
+.table-glass tbody td:first-child {
+    border-radius: 12px 0 0 12px;
+}
+
+.table-glass tbody td:last-child {
+    border-radius: 0 12px 12px 0;
+}
+
+/* Badges */
+.badge-glass {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-weight: 500;
+    font-size: 0.8rem;
+}
+
+.badge-success { background: rgba(16, 185, 129, 0.2); color: var(--success); border-color: rgba(16, 185, 129, 0.3); }
+.badge-warning { background: rgba(245, 158, 11, 0.2); color: var(--warning); border-color: rgba(245, 158, 11, 0.3); }
+.badge-primary { background: rgba(99, 102, 241, 0.2); color: var(--primary); border-color: rgba(99, 102, 241, 0.3); }
+
+/* Page Title */
+.page-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.page-subtitle {
+    color: var(--text-secondary);
+    font-size: 1rem;
+}
+
+/* Alert */
+.alert-glass {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    padding: 16px 20px;
+    color: var(--text-primary);
+}
+
+.alert-glass.success {
+    border-left: 4px solid var(--success);
+    background: rgba(16, 185, 129, 0.1);
+}
+
+.alert-glass.error {
+    border-left: 4px solid var(--danger);
+    background: rgba(239, 68, 68, 0.1);
+}
+
+/* Review Cards */
+.review-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 16px;
+}
+
+.review-stars {
+    color: #fbbf24;
+    font-size: 1.2rem;
+}
+
+/* Container */
+.container-main {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+/* Login Page */
+.login-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.login-card {
+    width: 100%;
+    max-width: 420px;
+}
+
+.login-card .logo {
+    font-size: 2.5rem;
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 40px;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Charts */
+.chart-container {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 24px;
+}
