@@ -35,26 +35,26 @@
                 <div class="card text-white bg-primary mb-3">
                     <div class="card-header">Locations</div>
                     <div class="card-body">
-                        <h5 class="card-title">0 Managed</h5>
+                        <h5 class="card-title"><?php echo $this->db->where('deleted_at', NULL)->count_all_results('locations'); ?> Managed</h5>
                         <p class="card-text">View and manage your GBP locations.</p>
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="card text-white bg-success mb-3">
-                    <div class="card-header">Insights</div>
+                    <div class="card-header">Total Reviews</div>
                     <div class="card-body">
-                        <h5 class="card-title">Recent Activity</h5>
-                        <p class="card-text">Check performance metrics.</p>
+                        <h5 class="card-title"><?php echo $this->db->count_all('reviews'); ?> Reviews</h5>
+                        <p class="card-text">Check customer feedback.</p>
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="card text-white bg-info mb-3">
-                    <div class="card-header">Reviews</div>
+                    <div class="card-header">Pending Replies</div>
                     <div class="card-body">
-                        <h5 class="card-title">Pending Replies</h5>
-                        <p class="card-text">Respond to customer feedback.</p>
+                        <h5 class="card-title"><?php echo $this->db->where('reply_text', NULL)->count_all_results('reviews'); ?> Pending</h5>
+                        <p class="card-text">Respond to reviews.</p>
                     </div>
                 </div>
             </div>

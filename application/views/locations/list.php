@@ -51,6 +51,7 @@
                             <a href="<?php echo site_url('locations/edit/'.$loc->id); ?>" class="btn btn-sm btn-primary">Edit</a>
                             <a href="<?php echo site_url('insights/view/'.$loc->id); ?>" class="btn btn-sm btn-info">Insights</a>
                             <a href="<?php echo site_url('reviews/index/'.$loc->id); ?>" class="btn btn-sm btn-warning">Reviews</a>
+                            <a href="<?php echo site_url('posts/index/'.$loc->id); ?>" class="btn btn-sm btn-success">Posts</a>
                         </td>
                     </tr>
                     <?php endforeach; ?>
